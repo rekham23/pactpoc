@@ -1,0 +1,168 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.pact.drivermngmnt</groupId>
+  <artifactId>driver_management</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+	
+	<packaging>jar</packaging>
+	
+	<dependencies>
+		<!-- <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency> -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>1.5.8.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>1.5.8.RELEASE</version>
+        </dependency>
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+		<!-- <dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.12</version>
+		    <scope>test</scope>
+		</dependency> -->
+        <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-test</artifactId>
+		    <version>4.0.5.RELEASE</version>
+		    <scope>test</scope>
+		</dependency>
+        <dependency>
+			<groupId>au.com.dius</groupId>
+			<artifactId>pact-jvm-consumer-junit_2.11</artifactId>
+			<version>3.3.9</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.groovy</groupId>
+					<artifactId>groovy-all</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>au.com.dius</groupId>
+			<artifactId>pact-jvm-provider-junit_2.11</artifactId>
+			<version>3.3.9</version>
+		</dependency>	     
+    </dependencies>
+
+	<!-- <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                 <version>1.5.8.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <finalName>pact-${project.artifactId}-${project.version}</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build> -->
+    
+    <dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Camden.SR6</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+    
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                 <version>1.5.8.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <finalName>fat-${project.artifactId}-${project.version}</finalName>
+                </configuration>
+            </plugin>
+            <!-- <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-surefire-plugin</artifactId>
+		    <configuration>
+		        <systemProperties>
+		            <property>
+		                <name>serviceurl</name>
+		                <value>${serviceurl}</value>
+		            </property>
+		        </systemProperties>
+		    </configuration>
+		</plugin> --> 
+		<plugin>
+		    <groupId>au.com.dius</groupId>
+                <artifactId>pact-jvm-provider-maven_2.11</artifactId>
+					<!-- <version>3.3.4</version> -->
+					<version>3.3.9</version>
+					<configuration>
+					<pactBrokerUrl>https://test.pact.dius.com.au/</pactBrokerUrl>
+                    <pactBrokerUsername>dXfltyFMgNOFZAxr8io9wJ37iUpY42M</pactBrokerUsername>
+                    <pactBrokerPassword>O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1</pactBrokerPassword>
+				      <serviceProviders>
+				        <!-- You can define as many as you need, but each must have a unique name -->
+				        <serviceProvider>
+				          <name>driver-service</name>
+				          <!-- All the provider properties are optional, and have sensible defaults (shown below) -->
+				          <protocol>http</protocol>
+				          <host>localhost</host>
+				          <port>8082</port>
+				          <!-- <path>/</path> -->
+				          <pactBroker>
+                            	<url>https://test.pact.dius.com.au</url>
+                            	<authentication>
+                            		<username>dXfltyFMgNOFZAxr8io9wJ37iUpY42M</username>
+                            		<password>O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1</password>
+                            	</authentication>
+                            </pactBroker>
+                            <!-- <pactFileDirectory>target/pacts</pactFileDirectory>
+                            <consumers>
+                                    <consumer>
+                                        <name>passenger</name>
+                                        <pactFile>target/pacts/ExtensePOC-DrivePOC.json</pactFile>
+                                        <pactFileDirectory>target/pacts</pactFileDirectory>
+                                    </consumer>
+                                </consumers> -->
+				        </serviceProvider>
+				      </serviceProviders>
+				    </configuration>
+		</plugin>  
+        </plugins>
+    </build>
+  
+  
+</project>

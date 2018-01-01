@@ -1,0 +1,47 @@
+{
+    "provider": {
+        "name": "driver-service"
+    },
+    "consumer": {
+        "name": "passenger-service"
+    },
+    "interactions": [
+        {
+            "description": "get driver detail response",
+            "request": {
+                "method": "GET",
+                "path": "/driver-details/driver"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json;charset=UTF-8"
+                },
+                "body": {
+                    "location": "LNIwpizihsGqFlGONkCj",
+                    "name": "xJSeYVDjeSVoaIjwpLSQ",
+                    "phoneno": 277289302
+                },
+                "matchingRules": {
+                    "$.body.name": {
+                        "match": "type"
+                    },
+                    "$.body.phoneno": {
+                        "match": "type"
+                    },
+                    "$.body.location": {
+                        "match": "type"
+                    }
+                }
+            }
+        }
+    ],
+    "metadata": {
+        "pact-specification": {
+            "version": "2.0.0"
+        },
+        "pact-jvm": {
+            "version": "3.3.9"
+        }
+    }
+}

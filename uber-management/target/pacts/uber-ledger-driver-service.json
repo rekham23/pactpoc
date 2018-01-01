@@ -1,0 +1,59 @@
+{
+    "provider": {
+        "name": "driver-service"
+    },
+    "consumer": {
+        "name": "uber-ledger"
+    },
+    "interactions": [
+        {
+            "description": "get uber office detail response",
+            "request": {
+                "method": "GET",
+                "path": "/driver-details"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json;charset=UTF-8"
+                },
+                "body": {
+                    "datetripturn": "TtoREyziFOvkARPmXsoM",
+                    "incentiveBool": true,
+                    "location": "OiRsKPuBzZRPgldEbZcQ",
+                    "name": "dUzTxCcvhiDFGTdzVHTI",
+                    "phoneno": "SwymcxaZdiKcgCMiukBr",
+                    "tripDate": "28/12/2017"
+                },
+                "matchingRules": {
+                    "$.body.incentiveBool": {
+                        "match": "type"
+                    },
+                    "$.body.datetripturn": {
+                        "match": "type"
+                    },
+                    "$.body.tripDate": {
+                        "date": "dd/MM/yyyy"
+                    },
+                    "$.body.name": {
+                        "match": "type"
+                    },
+                    "$.body.phoneno": {
+                        "match": "type"
+                    },
+                    "$.body.location": {
+                        "match": "type"
+                    }
+                }
+            }
+        }
+    ],
+    "metadata": {
+        "pact-specification": {
+            "version": "2.0.0"
+        },
+        "pact-jvm": {
+            "version": "3.3.9"
+        }
+    }
+}
